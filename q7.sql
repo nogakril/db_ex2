@@ -1,7 +1,12 @@
 select year, name
 from authors A
-where conference="focs" and year >= 2000 and year <= 2020 and adjustedcount >= all (select B.adjustedcount
-                                                    from authors B
-                                                    where conference="focs" and B.year=A.year
-                                                    )
+where conference='focs'
+      and institution='Hebrew University of Jerusalem'
+      and year >= 2000
+      and year <= 2020
+      and A.count >= all(select B.count
+                         from authors B
+                         where conference='focs'
+                               and institution='Hebrew University of Jerusalem'
+                               and B.year=A.year)
 order by year, name;
